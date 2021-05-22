@@ -7,6 +7,15 @@
   <title>Document</title>
 </head>
 <body>
+  <header>
+    <button onclick='window.location.href="/"'>Home</button>
+    <button onclick='window.location.href="/dashboard"'>Dashboard</button>
+    {{#if logged_in}}
+    <button onclick='window.location.href="/logout"'>Logout</button>
+    {{else}}
+    <button onclick='window.location.href="/login"'>Login</button>
+    {{/if}}
+  </header>
   {{{ body }}}
 </body>
 </html>

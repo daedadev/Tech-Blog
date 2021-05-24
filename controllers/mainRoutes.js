@@ -6,6 +6,10 @@ const Post = require("../models/Post");
 // home route
 router.get("/", async (req, res) => {
   try {
+    res.render("homepage", {
+      logged_in: req.session.logged_in,
+      user: userLoggedIn,
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -28,10 +32,9 @@ router.get("/signup", async (req, res) => {
       console.log(loggedUser[0]);
       userLoggedIn = loggedUser[0];
     }
-    res.render("user-signup", {
+    res.render("signup", {
       logged_in: req.session.logged_in,
       user: userLoggedIn,
-      layout: "user-main.handlebars",
     });
   } catch (err) {
     console.log(err);
@@ -54,10 +57,9 @@ router.get("/login", async (req, res) => {
       console.log(loggedUser[0]);
       userLoggedIn = loggedUser[0];
     }
-    res.render("user-login", {
+    res.render("login", {
       logged_in: req.session.logged_in,
       user: userLoggedIn,
-      layout: "user-main.handlebars",
     });
   } catch (err) {
     console.log(err);

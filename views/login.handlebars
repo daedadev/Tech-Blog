@@ -1,8 +1,47 @@
 <section>
-    <article class="login-form">
+    <article style="display: flex;flex-direction: column;width: 50%;
+    margin: 0 auto;
+    margin-top: 10vh; height: 22vh;
+    justify-content: space-between;"class="login-form">
         Email: <input id="email" type="text" >
         Password: <input id="password" type="text" >
         <button onclick=loginButton()>Submit</button>
-        <button onclick=forgotPassword()>I Forgot My Password</button>
     </article>
 </section>
+<script>
+    const loginButton = async () => {
+        const Email = document.getElementById("email");
+        const Password = document.getElementById("password");
+
+        if (Email.value && Password.value) {
+            userLogin = {
+                email: Email.value,
+                password: Password.value,
+            };
+
+            console.log(userLogin);
+
+            const response = await fetch("/api/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(userLogin),
+            });
+
+            if (response.ok) {
+                console.log("Logging you in.")
+                Email.value = '';
+                Password.value = '';
+                window.location.href='/';
+                alert(`Logged in!`)
+            } else {
+                alert("Failed to login");
+                console.log(response);
+                
+            }
+        }else{
+            alert('Please enter an email and password.')
+        };
+    }
+</script>

@@ -6,7 +6,46 @@ const Post = require("../models/Post");
 // home route
 router.get("/", async (req, res) => {
   try {
+    let loggedUser;
+    let userLoggedIn = "Jack";
+
+    if (req.session.user_id) {
+      loggedUser = await User.findAll({
+        where: {
+          id: req.session.user_id,
+        },
+        raw: true,
+      });
+      console.log(loggedUser[0]);
+      userLoggedIn = loggedUser[0];
+    }
+
     res.render("homepage", {
+      logged_in: req.session.logged_in,
+      user: userLoggedIn,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+router.get("/dashboard", async (req, res) => {
+  try {
+    let loggedUser;
+    let userLoggedIn = "Jack";
+
+    if (req.session.user_id) {
+      loggedUser = await User.findAll({
+        where: {
+          id: req.session.user_id,
+        },
+        raw: true,
+      });
+      console.log(loggedUser[0]);
+      userLoggedIn = loggedUser[0];
+    }
+    res.render("dashboard", {
       logged_in: req.session.logged_in,
       user: userLoggedIn,
     });

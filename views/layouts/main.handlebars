@@ -11,11 +11,32 @@
     <button onclick='window.location.href="/"'>Home</button>
     <button onclick='window.location.href="/dashboard"'>Dashboard</button>
     {{#if logged_in}}
-    <button onclick='window.location.href="/logout"'>Logout</button>
+    <button onclick=logoutFunction()>Logout</button>
     {{else}}
     <button onclick='window.location.href="/login"'>Login</button>
+    <button onclick='window.location.href="/signup"'>Signup</button>
     {{/if}}
   </header>
   {{{ body }}}
 </body>
 </html>
+<script>
+  const logoutFunction = async () => {
+
+    const response = await fetch("/api/logout", {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+        },
+    });
+
+    if (response.ok) {
+      console.log("Logging you in.")
+      window.location.reload();
+      alert(`Logged out`)
+    } else {
+      alert("Failed to logout");
+      console.log(response);
+    }
+  }
+</script>

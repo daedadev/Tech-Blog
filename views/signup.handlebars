@@ -10,30 +10,43 @@
         <button onclick=loginButton()>Submit</button>
     </article>
 </section>
-    <script>
-        function loginButton() {
-            console.log("submitted");
+<script>
+    const loginButton = async () => {
+        console.log("submitted");
 
-            const Username = document.getElementById("userNameInput")
-            const Name = document.getElementById("name")
-            const Email = document.getElementById("email")
-            const Password = document.getElementById("password")
+        const Username = document.getElementById("userNameInput")
+        const Name = document.getElementById("name")
+        const Email = document.getElementById("email")
+        const Password = document.getElementById("password")
 
-            userData = {
-                username: Username.value, 
-                name: Name.value,
-                email: Email.value,
-                password: Password.value,
-            }
-
-            console.log(userData);
-
-            fetch("/api/signup", {
-                method: "POST",
-                headers: {
-                "Content-Type": "application/json",
-                },
-                body: JSON.stringify(userData),
-            });
+        userData = {
+            username: Username.value, 
+            name: Name.value,
+            email: Email.value,
+            password: Password.value,
         }
-    </script>
+
+        console.log(userData);
+
+         const response = await fetch("/api/signup", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userData),
+        });
+
+        if (response.ok) {
+            console.log("Signing Up")
+            Username.value = '';
+            Name.value = '';
+            Email.value = '';
+            Password.value = '';
+            window.location.href='/login';
+            alert(`Signed Up Successfully, please login`);
+        } else {
+            alert("Failed to signup");
+            console.log(response);
+        }
+    }
+</script>

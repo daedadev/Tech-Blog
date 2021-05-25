@@ -20,9 +20,14 @@ router.get("/", async (req, res) => {
       userLoggedIn = loggedUser[0];
     }
 
+    const Posts = await Post.findAll();
+
+    const postsArray = Posts.map((postInfo) => postInfo.get({ plain: true }));
+
     res.render("homepage", {
       logged_in: req.session.logged_in,
       user: userLoggedIn,
+      postsArray,
     });
   } catch (err) {
     console.log(err);
@@ -45,6 +50,7 @@ router.get("/dashboard", async (req, res) => {
       console.log(loggedUser[0]);
       userLoggedIn = loggedUser[0];
     }
+
     res.render("dashboard", {
       logged_in: req.session.logged_in,
       user: userLoggedIn,

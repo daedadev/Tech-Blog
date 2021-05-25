@@ -3,6 +3,22 @@ const User = require("../models/User");
 const Comment = require("../models/Comment");
 const Post = require("../models/Post");
 
+// Dashboard Post route
+router.post("/dashboard", async (req, res) => {
+  console.log(req.body);
+  const thePost = req.body;
+  try {
+    const newPost = Post.create({
+      title: thePost.title,
+      content: thePost.content,
+      user_id: req.session.user_id,
+    });
+    res.send(newPost);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
 // Login route
 router.post("/login", async (req, res) => {
   console.log(req.body);
@@ -30,6 +46,7 @@ router.post("/login", async (req, res) => {
       req.session.logged_in = true;
       console.log("Youre logged in");
       res.json({ user: userCheck, message: "You are logged in!" });
+      res.send("okay");
     });
   } catch (err) {
     res.status(400).json(err);
@@ -45,6 +62,7 @@ router.post("/signup", async (req, res) => {
       password: req.body.password,
     }).then((newUser) => {
       res.json(newUser);
+      res.send("okay");
     });
   } catch (err) {
     console.log(err);

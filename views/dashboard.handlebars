@@ -1,5 +1,51 @@
 {{#if logged_in}}
 <h1>Welcome to your dashboard {{user.username}}</h1>
+<article style="display: flex;flex-direction: column;width: 50%;
+margin: 0 auto;
+margin-top: 10vh; height: 22vh;
+justify-content: space-between;">
+    Title: <input id="title" type="text" >
+    Content: <input id="content" type="text" >
+    <button onclick=submitPost()>Submit</button>
+</article>
 {{else}}
 <h1>Please login to view your dashboard</h1>
 {{/if}}
+<script>
+    const submitPost = async () => {
+        console.log("submitted");
+
+        const Title = document.getElementById("title")
+        const Content = document.getElementById("content")
+
+        if(Title.value && Content.value){
+            newPost = {
+                title: Title.value, 
+                content: Content.value,
+            }
+
+            console.log(newPost);
+
+            const response = await fetch("/api/dashboard", {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/json",
+                },
+                body: JSON.stringify(newPost),
+            });
+
+            if (response.ok) {
+                console.log(response)
+                Title.value = '';
+                Content.value = '';
+                window.location.reload();
+            } else {
+                alert("Failed to login");
+                console.log(response);
+                
+            }
+        }else{
+            alert("Please add a title and some content to your post.")
+        }
+    }
+</script>

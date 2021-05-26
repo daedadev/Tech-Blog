@@ -35,6 +35,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Main dashboard
 router.get("/dashboard", async (req, res) => {
   try {
     let loggedUser;
@@ -51,10 +52,68 @@ router.get("/dashboard", async (req, res) => {
       userLoggedIn = loggedUser[0];
     }
 
-    res.render("dashboard", {
-      logged_in: req.session.logged_in,
-      user: userLoggedIn,
-    });
+    if (req.session.user_id) {
+      posts = await Post.findAll({
+        where: {
+          user_id: req.session.user_id,
+        },
+      });
+
+      const postsArray = posts.map((postInfo) => postInfo.get({ plain: true }));
+
+      res.render("dashboard", {
+        logged_in: req.session.logged_in,
+        user: userLoggedIn,
+        postsArray,
+      });
+    } else {
+      res.render("login", {
+        logged_in: req.session.logged_in,
+        user: userLoggedIn,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+// Submit Dashboard
+router.get("/submitdash", async (req, res) => {
+  try {
+    let loggedUser;
+    let userLoggedIn = "Jack";
+
+    if (req.session.user_id) {
+      loggedUser = await User.findAll({
+        where: {
+          id: req.session.user_id,
+        },
+        raw: true,
+      });
+      console.log(loggedUser[0]);
+      userLoggedIn = loggedUser[0];
+    }
+
+    if (req.session.user_id) {
+      posts = await Post.findAll({
+        where: {
+          user_id: req.session.user_id,
+        },
+        raw: true,
+      });
+
+      res.render("dash-submit", {
+        logged_in: req.session.logged_in,
+        user: userLoggedIn,
+        posts,
+      });
+    } else {
+      res.render("login", {
+        logged_in: req.session.logged_in,
+        user: userLoggedIn,
+      });
+    }
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

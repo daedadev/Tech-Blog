@@ -1,35 +1,65 @@
 body {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   margin: 0;
+  background-color: aliceblue;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(102, 4, 4);
+}
+
+header button {
+  width: 10%;
+  height: 40px;
+  background-color: rgb(102, 4, 4);
+  color: aliceblue;
+  border-style: none;
+}
+
+.the-top {
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(102, 4, 4);
+  padding-left: 3%;
+  color: aliceblue;
 }
 
 .large-post-holder {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
   justify-content: center;
   align-items: center;
-  background-color: aqua;
+  background-color: aliceblue;
 }
 
 .post-holder {
-  width: 80%;
   display: flex;
   flex-direction: column;
-  background-color: aquamarine;
-  border-color: rgb(255, 0, 0);
-  border-radius: 5px;
-  border-width: 5px;
+  width: 80%;
+  background-color: rgb(102, 102, 102);
+  border-radius: 10px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: rgb(102, 102, 102);
+  margin: 5%;
 }
 
 .post-title-holder {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  color: aliceblue;
+  padding: 2%;
 }
 
 .post-content-holder {
   display: flex;
   flex-direction: column;
-  background-color: blanchedalmond;
+  background-color: rgb(255, 255, 255);
+  padding: 2%;
 }

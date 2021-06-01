@@ -1,0 +1,16 @@
+<section class="the-top">
+    <h1>This is the homepage</h1>
+</section>
+<section class="large-post-holder"> 
+{{#each postsArray as | post |}}
+    <section class="post-holder">
+        <article class="post-title-holder">
+            <h1>{{post.title}}</h1>
+            <h1>Posted By {{post.user.username}}</h1>
+        </article>
+        <article class="post-content-holder">
+            <h1>{{post.content}}</h1>
+        </article>
+    </section>
+{{/each}}
+</section>

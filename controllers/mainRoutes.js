@@ -1,7 +1,5 @@
 const router = require("express").Router();
-const User = require("../models/User");
-const Comment = require("../models/Comment");
-const Post = require("../models/Post");
+const { User, Comment, Post } = require("../models/");
 
 // home route
 router.get("/", async (req, res) => {
@@ -20,11 +18,50 @@ router.get("/", async (req, res) => {
       userLoggedIn = loggedUser[0];
     }
 
-    const Posts = await Post.findAll();
+    const Posts = await Post.findAll({
+      include: User,
+    });
 
     const postsArray = Posts.map((postInfo) => postInfo.get({ plain: true }));
 
     res.render("homepage", {
+      logged_in: req.session.logged_in,
+      user: userLoggedIn,
+      postsArray,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+// home route
+router.get("/homepost/:id", async (req, res) => {
+  try {
+    let loggedUser;
+    let userLoggedIn = "Jack";
+
+    if (req.session.user_id) {
+      loggedUser = await User.findAll({
+        where: {
+          id: req.session.user_id,
+        },
+        raw: true,
+      });
+      console.log(loggedUser[0]);
+      userLoggedIn = loggedUser[0];
+    }
+
+    const Posts = await Post.findAll({
+      where: {
+        id: req.params.id,
+      },
+      include: User,
+    });
+
+    const postsArray = Posts.map((postInfo) => postInfo.get({ plain: true }));
+
+    res.render("home-post", {
       logged_in: req.session.logged_in,
       user: userLoggedIn,
       postsArray,
@@ -47,6 +84,8 @@ router.get("/dashboard", async (req, res) => {
           id: req.session.user_id,
         },
         raw: true,
+
+        include: Post,
       });
       console.log(loggedUser[0]);
       userLoggedIn = loggedUser[0];
@@ -57,9 +96,12 @@ router.get("/dashboard", async (req, res) => {
         where: {
           user_id: req.session.user_id,
         },
+        include: User,
       });
 
       const postsArray = posts.map((postInfo) => postInfo.get({ plain: true }));
+
+      console.log(postsArray);
 
       res.render("dashboard", {
         logged_in: req.session.logged_in,

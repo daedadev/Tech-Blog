@@ -3,14 +3,16 @@
 </section>
 <section class="large-post-holder"> 
 {{#each postsArray as | post |}}
-    <section class="post-holder">
-        <article class="post-title-holder">
-            <h1>{{post.title}}</h1>
-            <h1>TimeStamp</h1>
-        </article>
-        <article class="post-content-holder">
-            <h1>{{post.content}}</h1>
-        </article>
-    </section>
+    <a class="post-holder" href="/homepost/{{post.id}}">
+        <section>
+            <article class="post-title-holder">
+                <h1>{{post.title}}</h1>
+                <h1>Posted By {{post.user.username}}</h1>
+            </article>
+            <article class="post-content-holder">
+                <h1>{{post.content}}</h1>
+            </article>
+        </section>
+    </a>
 {{/each}}
 </section>

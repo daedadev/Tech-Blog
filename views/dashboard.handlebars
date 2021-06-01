@@ -1,11 +1,17 @@
 <section class="the-top">
     <h1>Welcome to your dashboard {{user.username}}</h1>
 </section>
-<section>
+<section class="large-post-holder">
 {{#each postsArray as | post |}}
-    <article>
-        <h1>{{post.title}}</h1>
-        <h1>{{user.username}}</h1>
+    <article class="post-holder">
+        <article class="post-title-holder">
+            <h1>{{post.title}}</h1>
+            <h1>{{post.updatedAt}}</h1>
+        </article>
     </article>
 {{/each}}
+<button onclick='window.location.href="/submitdash"'>New Post</button>
 </section>
+<script>
+
+</script>

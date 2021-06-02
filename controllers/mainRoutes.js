@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const { User, Comment, Post } = require("../models/");
+const withAuth = require("../utils/auth");
 
 // home route
 router.get("/", async (req, res) => {
@@ -36,7 +37,7 @@ router.get("/", async (req, res) => {
 });
 
 // home route
-router.get("/homepost/:id", async (req, res) => {
+router.get("/homepost/:id", withAuth, async (req, res) => {
   try {
     let loggedUser;
     let userLoggedIn = "Jack";
@@ -61,7 +62,7 @@ router.get("/homepost/:id", async (req, res) => {
 
     const postsArray = Posts.map((postInfo) => postInfo.get({ plain: true }));
 
-    res.render("home-post", {
+    res.render("submit-comment", {
       logged_in: req.session.logged_in,
       user: userLoggedIn,
       postsArray,
@@ -73,7 +74,7 @@ router.get("/homepost/:id", async (req, res) => {
 });
 
 // Main dashboard
-router.get("/dashboard", async (req, res) => {
+router.get("/dashboard", withAuth, async (req, res) => {
   try {
     let loggedUser;
     let userLoggedIn = "Jack";
@@ -121,7 +122,7 @@ router.get("/dashboard", async (req, res) => {
 });
 
 // Submit Dashboard
-router.get("/submitdash", async (req, res) => {
+router.get("/submitdash", withAuth, async (req, res) => {
   try {
     let loggedUser;
     let userLoggedIn = "Jack";
@@ -145,7 +146,7 @@ router.get("/submitdash", async (req, res) => {
         raw: true,
       });
 
-      res.render("dash-submit", {
+      res.render("submit-post", {
         logged_in: req.session.logged_in,
         user: userLoggedIn,
         posts,

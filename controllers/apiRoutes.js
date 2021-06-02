@@ -2,7 +2,23 @@ const router = require("express").Router();
 const { User, Comment, Post } = require("../models/");
 
 // Dashboard Post route
-router.post("/dashboard", async (req, res) => {
+router.post("/post", async (req, res) => {
+  console.log(req.body);
+  const thePost = req.body;
+  try {
+    const newPost = Post.create({
+      title: thePost.title,
+      content: thePost.content,
+      user_id: req.session.user_id,
+    });
+    res.send(newPost);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+// Comment Post route
+router.post("/comment", async (req, res) => {
   console.log(req.body);
   const thePost = req.body;
   try {

@@ -1,0 +1,63 @@
+<section class="the-top">
+    <h1>Leave A Comment</h1>
+</section>
+<section class="large-post-holder"> 
+{{#each postsArray as | post |}}
+    <section class="post-holder">
+        <article class="post-title-holder">
+            <h1>{{post.title}}</h1>
+            <h1>Posted By {{post.user.username}}</h1>
+        </article>
+        <article class="post-content-holder">
+            <h1>{{post.content}}</h1>
+        </article>
+    </section>
+{{/each}}
+</section>
+<section class="large-post-holder"> 
+    <section class="post-holder">
+        <article class="post-title-holder">
+            <h1>Leave A Comment</h1>
+        </article>
+        <article class="post-content-holder">
+            Content<input id="content" class="content-input" type="text">
+        </article>
+    </section>
+    <button onclick=submitComment()>Submit Comment</button>
+</section>
+
+<script>
+    const submitComment = async () => {
+        console.log("submitted");
+
+        const Content = document.getElementById("content")
+
+        if(Content.value){
+            newComment = {
+                content: Content.value,
+            }
+
+            console.log(newPost);
+
+            const response = await fetch("/api/comment", {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/json",
+                },
+                body: JSON.stringify(newComment),
+            });
+
+            if (response.ok) {
+                console.log(response)
+                Content.value = '';
+                window.location.reload();
+            } else {
+                alert("Failed to post comment");
+                console.log(response);
+                
+            }
+        }else{
+            alert("Please add a title and some content to your post.")
+        }
+    }
+</script>

@@ -2,28 +2,30 @@
     <h1>Leave A Comment</h1>
 </section>
 <section class="large-post-holder"> 
-{{#each postsArray as | post |}}
     <section class="post-holder">
         <article class="post-title-holder">
-            <h1>{{post.title}}</h1>
-            <h1>Posted By {{post.user.username}}</h1>
+            <h1>{{thePost.title}}</h1>
+            <h1>Posted By {{thePost.user.username}}</h1>
         </article>
         <article class="post-content-holder">
-            <h1>{{post.content}}</h1>
+            <h1>{{thePost.content}}</h1>
         </article>
     </section>
-{{/each}}
-</section>
-<section class="large-post-holder"> 
-    <section class="post-holder">
-        <article class="post-title-holder">
-            <h1>Leave A Comment</h1>
-        </article>
-        <article class="post-content-holder">
-            Content<input id="content" class="content-input" type="text">
-        </article>
+    <section class="large-post-holder"> 
+    {{#if logged_in}}
+        <section class="post-holder">
+            <article class="post-title-holder">
+                <h1>Leave A Comment</h1>
+            </article>
+            <article class="post-content-holder">
+                Content<input id="content" class="content-input" type="text">
+            </article>
+        </section>
+        <button onclick=submitComment()>Submit Comment</button>
+        {{else}}
+        <h1>Log In To Leave A Comment</h1>
+    {{/if}}
     </section>
-    <button onclick=submitComment()>Submit Comment</button>
 </section>
 
 <script>
@@ -32,12 +34,20 @@
 
         const Content = document.getElementById("content")
 
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+
+        const postID = urlParams.get('id');
+
+        console.log("Post ID = "+ postID)
+
         if(Content.value){
             newComment = {
                 content: Content.value,
+                post_id: postID,
             }
 
-            console.log(newPost);
+            console.log(newComment);
 
             const response = await fetch("/api/comment", {
                 method: "POST",
@@ -50,14 +60,15 @@
             if (response.ok) {
                 console.log(response)
                 Content.value = '';
-                window.location.reload();
+                alert("Comment Added");
+                window.location.href=="/";
             } else {
                 alert("Failed to post comment");
                 console.log(response);
                 
             }
         }else{
-            alert("Please add a title and some content to your post.")
+            alert("Please add content to yor comment.")
         }
     }
 </script>

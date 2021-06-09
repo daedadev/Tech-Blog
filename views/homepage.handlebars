@@ -3,7 +3,7 @@
 </section>
 <section class="large-post-holder"> 
 {{#each postsArray as | post |}}
-    <a class="post-holder" href="/homepost/{{post.id}}">
+    <a class="post-holder" href="/homepost/{{post.id}}/?id={{post.id}}">
         <section>
             <article class="post-title-holder">
                 <h1>{{post.title}}</h1>
@@ -14,5 +14,13 @@
             </article>
         </section>
     </a>
+    {{#each post.comments as | comment |}}
+    <article class="post-holder">
+        <article class="post-title-holder">
+            <h1>{{comment.content}}</h1>
+            <h1>Posted By {{comment.user.username}}</h1>
+        </article>
+    </article>
+    {{/each}}
 {{/each}}
 </section>

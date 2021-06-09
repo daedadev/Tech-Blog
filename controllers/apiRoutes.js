@@ -17,14 +17,52 @@ router.post("/post", async (req, res) => {
   }
 });
 
-// Comment Post route
-router.post("/comment", async (req, res) => {
+// Dashboard Update route
+router.put("/put", async (req, res) => {
   console.log(req.body);
   const thePost = req.body;
   try {
-    const newPost = Post.create({
-      title: thePost.title,
-      content: thePost.content,
+    Post.update(
+      {
+        title: thePost.title,
+        content: thePost.content,
+      },
+      {
+        where: {
+          id: thePost.post_id,
+        },
+      }
+    );
+    res.send(thePost);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+// Dashboard Delete route
+router.delete("/delete", async (req, res) => {
+  console.log(req.body);
+  const thePost = req.body;
+  try {
+    Post.destroy({
+      where: {
+        id: thePost.post_id,
+      },
+    });
+    res.send(thePost);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+// Comment Post route
+router.post("/comment", async (req, res) => {
+  console.log(req.body);
+  const theComment = req.body;
+  try {
+    const newPost = Comment.create({
+      content: theComment.content,
+      post_id: theComment.post_id,
       user_id: req.session.user_id,
     });
     res.send(newPost);

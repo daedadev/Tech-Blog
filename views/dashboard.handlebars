@@ -3,15 +3,13 @@
 </section>
 <section class="large-post-holder">
 {{#each postsArray as | post |}}
-    <article class="post-holder">
+    <a href="/editdash/{{post.id}}/?id={{post.id}}" class="post-holder">
         <article class="post-title-holder">
             <h1>{{post.title}}</h1>
-            <h1>{{post.updatedAt}}</h1>
+            <h1>Posted By {{post.user.username}}</h1>
         </article>
-    </article>
+    </a>
 {{/each}}
 <button onclick='window.location.href="/submitdash"'>New Post</button>
 </section>
-<script>
 
-</script>

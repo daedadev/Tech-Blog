@@ -1,0 +1,90 @@
+<section class="the-top">
+    <h1>Welcome to your dashboard {{user.username}}</h1>
+</section>
+<article style="display: flex;flex-direction: column;width: 50%;
+margin: 0 auto;
+margin-top: 10vh; height: 22vh;
+justify-content: space-between;">
+    Title: <input id="title" type="text" value='{{thePost.title}}'>
+    Content: <input id="content" type="text" value='{{thePost.content}}'>
+    <button onclick=submitEdit()>Submit</button>
+    <button onclick=submitDelete()>Delete</button>
+</article>
+<script>
+    const submitEdit = async () => {
+        console.log("submitted");
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+
+        const postID = urlParams.get('id');
+
+        console.log("Post ID = "+ postID)
+
+        const Title = document.getElementById("title")
+        const Content = document.getElementById("content")
+
+        if(Title.value && Content.value){
+            postUpdate = {
+                title: Title.value, 
+                content: Content.value,
+                post_id: postID,
+            }
+
+            console.log(postUpdate);
+
+            const response = await fetch("/api/put", {
+                method: "PUT",
+                headers: {
+                "Content-Type": "application/json",
+                },
+                body: JSON.stringify(postUpdate),
+            });
+
+            if (response.ok) {
+                console.log(response)
+                Title.value = '';
+                Content.value = '';
+                window.location.reload();
+            } else {
+                alert("Failed to update post");
+                console.log(response);
+                
+            }
+        }else{
+            alert("Please add a title and some content to your update.")
+        }
+    }
+
+    const submitDelete = async () => {
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+
+        const postID = urlParams.get('id');
+
+        console.log("Post ID = "+ postID)
+
+        const postDelete = {
+            post_id: postID,
+        }
+
+        const response = await fetch("/api/delete", {
+                method: "DELETE",
+                headers: {
+                "Content-Type": "application/json",
+                },
+                body: JSON.stringify(postDelete),
+            });
+
+            if (response.ok) {
+                console.log(response)
+                alert("Post has been deleted");
+                window.location.href = "/dashboard";
+            } else {
+                alert("Failed to delete post");
+                console.log(response);
+                
+            }
+    }
+</script>

@@ -20,10 +20,21 @@ router.get("/", async (req, res) => {
     }
 
     const Posts = await Post.findAll({
-      include: User,
+      include: [
+        {
+          model: User,
+        },
+        {
+          model: Comment,
+          include: User,
+        },
+      ],
     });
 
     const postsArray = Posts.map((postInfo) => postInfo.get({ plain: true }));
+
+    console.log(postsArray);
+    console.log(postsArray[0].comments);
 
     res.render("homepage", {
       logged_in: req.session.logged_in,
@@ -37,7 +48,7 @@ router.get("/", async (req, res) => {
 });
 
 // home route
-router.get("/homepost/:id", withAuth, async (req, res) => {
+router.get("/homepost/:id", async (req, res) => {
   try {
     let loggedUser;
     let userLoggedIn = "Jack";
@@ -62,10 +73,12 @@ router.get("/homepost/:id", withAuth, async (req, res) => {
 
     const postsArray = Posts.map((postInfo) => postInfo.get({ plain: true }));
 
+    const thePost = postsArray[0];
+
     res.render("submit-comment", {
       logged_in: req.session.logged_in,
       user: userLoggedIn,
-      postsArray,
+      thePost,
     });
   } catch (err) {
     console.log(err);
@@ -121,7 +134,7 @@ router.get("/dashboard", withAuth, async (req, res) => {
   }
 });
 
-// Submit Dashboard
+// Submit Post Dashboard
 router.get("/submitdash", withAuth, async (req, res) => {
   try {
     let loggedUser;
@@ -157,6 +170,45 @@ router.get("/submitdash", withAuth, async (req, res) => {
         user: userLoggedIn,
       });
     }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+// Edit Post Dashboard
+router.get("/editdash/:id", withAuth, async (req, res) => {
+  try {
+    let loggedUser;
+    let userLoggedIn = "Jack";
+
+    if (req.session.user_id) {
+      loggedUser = await User.findAll({
+        where: {
+          id: req.session.user_id,
+        },
+        raw: true,
+      });
+      console.log(loggedUser[0]);
+      userLoggedIn = loggedUser[0];
+    }
+
+    const currentPost = await Post.findAll({
+      where: {
+        id: req.params.id,
+      },
+      raw: true,
+    });
+
+    console.log(currentPost);
+
+    const thePost = currentPost[0];
+
+    res.render("edit-post", {
+      logged_in: req.session.logged_in,
+      user: userLoggedIn,
+      thePost,
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

@@ -34,7 +34,6 @@ router.get("/", async (req, res) => {
     const postsArray = Posts.map((postInfo) => postInfo.get({ plain: true }));
 
     console.log(postsArray);
-    console.log(postsArray[0].comments);
 
     res.render("homepage", {
       logged_in: req.session.logged_in,

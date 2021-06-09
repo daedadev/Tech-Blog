@@ -6,10 +6,10 @@
     <a href="/editdash/{{post.id}}/?id={{post.id}}" class="post-holder">
         <article class="post-title-holder">
             <h1>{{post.title}}</h1>
-            <h1>Posted By {{post.user.username}}</h1>
+            <h1>Posted By {{post.user.username}} on {{post.updatedAt}}</h1>
         </article>
     </a>
 {{/each}}
-<button onclick='window.location.href="/submitdash"'>New Post</button>
+<button onclick='window.location.href="/submitdash"'>+ New Post</button>
 </section>
 

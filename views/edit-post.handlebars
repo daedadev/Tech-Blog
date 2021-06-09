@@ -1,16 +1,14 @@
 <section class="the-top">
     <h1>Welcome to your dashboard {{user.username}}</h1>
 </section>
-<article style="display: flex;flex-direction: column;width: 50%;
-margin: 0 auto;
-margin-top: 10vh; height: 22vh;
-justify-content: space-between;">
+<article class="sub-form">
     Title: <input id="title" type="text" value='{{thePost.title}}'>
     Content: <input id="content" type="text" value='{{thePost.content}}'>
     <button onclick=submitEdit()>Submit</button>
     <button onclick=submitDelete()>Delete</button>
 </article>
 <script>
+    // Edit Post
     const submitEdit = async () => {
         console.log("submitted");
 
@@ -56,6 +54,7 @@ justify-content: space-between;">
         }
     }
 
+    // Delete Post
     const submitDelete = async () => {
 
         const queryString = window.location.search;

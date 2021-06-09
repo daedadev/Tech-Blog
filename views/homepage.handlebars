@@ -7,7 +7,7 @@
         <section>
             <article class="post-title-holder">
                 <h1>{{post.title}}</h1>
-                <h1>Posted By {{post.user.username}}</h1>
+                <h1>Posted By {{post.user.username}} on {{post.updatedAt}}</h1>
             </article>
             <article class="post-content-holder">
                 <h1>{{post.content}}</h1>
@@ -18,7 +18,7 @@
     <article class="post-holder">
         <article class="post-title-holder">
             <h1>{{comment.content}}</h1>
-            <h1>Posted By {{comment.user.username}}</h1>
+            <h1>Posted By {{comment.user.username}} on {{comment.updatedAt}}</h1>
         </article>
     </article>
     {{/each}}

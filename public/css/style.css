@@ -45,6 +45,20 @@ header button {
   background-color: aliceblue;
 }
 
+.large-post-holder button {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(102, 4, 4);
+  color: aliceblue;
+  padding: 1%;
+  border-style: solid;
+  border-radius: 10px;
+  margin-top: 10%;
+}
+
 .post-holder {
   display: flex;
   flex-direction: column;
@@ -75,4 +89,27 @@ header button {
 /* Comment styling */
 .content-input {
   padding: 20px 10px;
+}
+
+/* Submission Form Styling */
+.sub-form {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 10vh;
+  height: 22vh;
+  justify-content: space-between;
+  background-color: aliceblue;
+  padding: 1%;
+  border-radius: 10px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: rgb(102, 102, 102);
+}
+
+.sub-form button {
+  background-color: rgb(102, 102, 102);
+  color: aliceblue;
+  border-style: solid;
 }

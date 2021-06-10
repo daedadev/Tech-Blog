@@ -2,11 +2,13 @@
 
 ## Description
 
-This project focuses on the use of sequelize and node.js to create a forum in which you can have an account, make posts and make comments on posts. There is a heavy focus on Handlebars as well as sequelize relationships. Handlebars was extremely helpful for keeping the styling fairly simple as well as simplifying the data transfer process between pages. This project was an extremely long one with many different problems to tackle. Even now there is some refinement to be added.
+This project focuses on the use of sequelize and node.js to create a forum in which you can have an account, make posts and make comments on posts. There is a heavy focus on Handlebars as well as sequelize relationships. Handlebars was extremely helpful for keeping the styling fairly simple as well as simplifying the data transfer process between pages. This project was an extremely long one with many different problems to tackle. Even now there is some refinement to be added. The application is currently deployed live on Heroku utilizing JAWS_DB. https://desolate-spire-45416.herokuapp.com/
 
 Thank you for visiting my project and I hope you enjoy.
 
 ## Usage
+
+The Application is Deployed Live Here: https://desolate-spire-45416.herokuapp.com/
 
 Any navigation through the site except for the Home page will default you to a login page.
 ![User login Screen](assets/img/login.PNG?raw=true)
